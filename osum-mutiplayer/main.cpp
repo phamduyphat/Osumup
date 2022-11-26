@@ -3,7 +3,6 @@
 std::vector<std::string> split (std::string s, std::string delimiter);
 bool GetDefaultBrowserLaunchPath(LPTSTR *pszFilepath);
 std::string osu_beatmap_link_extract_id(Url &url);
-void default_web_browser_passthrough(Url &url);
 
 
 int32_t main(int32_t argc, char *argv[])
@@ -21,24 +20,13 @@ int32_t main(int32_t argc, char *argv[])
     }
     else
     {
-        default_web_browser_passthrough(url);
+        //open default_browser.json
+        //temporarily set to brave
+        url.run("C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe");
     }
     return 0;
 }
 
-void default_web_browser_passthrough(Url &url)
-{
-    // ShellExecuteA(NULL, NULL, "C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe", url.str().c_str(), NULL, SW_SHOWDEFAULT);
-    LPTSTR BROWSERPATH;
-    /*
-    if (GetDefaultBrowserLaunchPath(&BROWSERPATH))
-    {
-        ShellExecuteA(NULL, NULL, BROWSERPATH, url.str().c_str(), NULL, SW_SHOWDEFAULT);
-        delete [] BROWSERPATH;
-        std::cin.get();
-    }
-    */
-}
 bool GetDefaultBrowserLaunchPath(LPTSTR *pszFilepath)
 {
     bool    bRes            = false;
@@ -127,11 +115,11 @@ std::vector<std::string> split (std::string s, std::string delimiter) {
 }
 
 // Todo:
-// -somehow has this connect as the default browser                    
-// -receive osu-multi links                                            
-// -convert the link to something that osum-direct-web can use         
-// -run osum-direct-web with the args
-// -convert osu-non beatmaps link + non-osu links to brave browser
+//// -somehow has this connect as the default browser                    
+//// -receive osu-multi links                                            
+//// -convert the link to something that osum-direct-web can use         
+//// -run osum-direct-web with the args
+// -convert osu-non beatmaps link + non-osu links to brave browser //half - done
 // -block certain website(adaf youtube channel, etc...);
 
 

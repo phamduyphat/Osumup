@@ -187,9 +187,9 @@ public:
     friend std::ostream& operator<<(std::ostream &o, const Url &u) {return u.output(o);}
 
     // Launch with a browser
-    std::string run(std::string path, Url &url)
+    void run(std::string path)
     {
-        ShellExecuteA(NULL, NULL, path.c_str(), url.str().c_str(), NULL, SW_SHOWDEFAULT);
+        ShellExecuteA(NULL, NULL, path.c_str(), this->str().c_str(), NULL, SW_SHOWDEFAULT);
     }
 private:
     void assign(const Url &url);
