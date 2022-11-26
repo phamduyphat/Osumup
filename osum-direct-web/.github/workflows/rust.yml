@@ -1,0 +1,25 @@
+on:
+ workflow_dispatch:
+ push:
+  paths:
+    - 'src/**'
+  branches: [ main ]
+ pull_request:
+  branches: [ main ]
+
+name: "Build project"
+
+env:
+ CARGO_TERM_COLOR: always
+
+jobs:
+ build_and_test:
+  name: osum!direct-web
+  runs-on: windows-latest
+  steps:
+    - uses: actions/checkout@v2
+    - uses: actions-rs/toolchain@v1
+      with:
+       override: true
+       toolchain: nightly
+    - run: cargo build
