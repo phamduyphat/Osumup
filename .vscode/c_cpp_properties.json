@@ -6,7 +6,8 @@
                 "C:/mingw64/bin",
                 "C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32",
 		        "F:/Learning Rust/osum-direct-web/CxxUrl-master",
-		        "C:/boost"
+                "C:\\json-develop\\single_include\\nlohmann",
+                "C:\\boost"
             ],
             "defines": [
                 "_DEBUG",

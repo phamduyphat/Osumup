@@ -1,15 +1,19 @@
 #include "libs.h"
+using json = nlohmann::json;
 
 std::vector<std::string> split (std::string s, std::string delimiter);
 bool GetDefaultBrowserLaunchPath(LPTSTR *pszFilepath);
 std::string osu_beatmap_link_extract_id(Url &url);
+void Missing_default_browser_file();
+void print_args(int32_t argc, char *argv[]){for(int32_t i = 0; i < argc; i ++) std::cout << argv[i] << ' '; std::cout << std::endl;}
 
 
 int32_t main(int32_t argc, char *argv[])
 {
     std::string url1 = argv[1]; Url url = url1;
+    print_args(argc, argv);//debug
 
-    if (std::regex_match(url.str(), std::regex("^(http|https)://osu.ppy.sh/(.*)")))
+    if (std::regex_match(url.str(), std::regex("^(http|https):\/\/osu.ppy.sh\/(b|beatmapsets|beatmaps)\/(.*)")))
     {
         std::string osum = "osum-direct-web:?" + osu_beatmap_link_extract_id(url);
 
@@ -20,9 +24,20 @@ int32_t main(int32_t argc, char *argv[])
     }
     else
     {
-        //open default_browser.json
-        //temporarily set to brave
-        url.run("C:/Program Files/BraveSoftware/Brave-Browser/Application/brave.exe");
+        if (not fopen("default_browser.json", "r"))
+        {
+            Missing_default_browser_file();
+            return 0;
+        }
+
+        std::ifstream default_browser("default_browser.json");
+        json BROWSER = json::parse(default_browser); 
+        url.run(BROWSER["default_browser"].get<std::string>());
+
+        std::cout << BROWSER["default_browser"].get<std::string>() << std::endl;
+        std::cout << default_browser.rdbuf() << std::endl;
+        std::cout << url.str() << std::endl; //debuging 
+        std::cin.get();
     }
     return 0;
 }
@@ -112,6 +127,23 @@ std::vector<std::string> split (std::string s, std::string delimiter) {
 
     res.push_back (s.substr (pos_start));
     return res;
+}
+void Missing_default_browser_file()
+{
+    std::cout << "default_browser.json is not found, creating one just for you, onii-chan" << std::endl <<
+                 "please open the installation location and add ur default-browser path UWU" << std::endl;
+    //create default json
+    std::ofstream BROWSER("default_browser.json");
+    json data = {
+        {"default_browser", ""}
+    };
+    BROWSER << std::setw(4) << data;
+    BROWSER.close();
+
+    #ifndef mwindows
+        std::cout << "Press enter to continue, onii-chan" << std::endl;
+        std::cin.get();
+    #endif
 }
 
 // Todo:
