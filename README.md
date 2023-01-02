@@ -11,5 +11,5 @@
 
 
 Todo:
-- []Actually having every ftp associations to be usable(currently set to my Opera installation location)
-- []Actually having an installation guide
+- [ ]Actually having every ftp associations to be usable(currently set to my Opera installation location)
+- [ ]Actually having an installation guide
