@@ -1,5 +1,5 @@
 #![feature(type_ascription)]
-// #![windows_subsystem = "windows"]
+#![windows_subsystem = "windows"]
 
 use configuration::Configuration;
 use osu::{client::OsuClient, launcher::Launcher};
